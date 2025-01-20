@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: gatway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: shopping
+          uri: lb://shopping
+          predicates:
+            - Path=/shopping/**
+        - id: billing
+          uri: lb://billing
+          predicates:
+            - Path=/billing/**
+        - id: payment
+          uri: lb://payment
+          predicates:
+            - Path=/payment/**
+eureka:
+  client:
+    service-Url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+server:
+  port: 8086
+logging:
+  level:
+    com.netflix.discovery: DEBUG
